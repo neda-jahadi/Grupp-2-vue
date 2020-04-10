@@ -1,14 +1,14 @@
 <template>
  <div class="kursinfo-container">
    <div class="kursinfo" @click="clickableDiv">
-      <div>{{info.date}}</div>
-      <div>{{info.title}}</div>
-      <div>{{info.content.substring(0,20)}}...</div>
+      <div class="row date">{{info.date}}</div>
+      <div class="row title">{{info.title}}</div>
+      <div class="row contentInRow">{{info.content.substring(0,20)}}...</div>
    </div>
-   <div class="content" v-show="contentShow">
-       <div v-show="visaContent" @click="visaContent=false">{{info.content}}</div>
+   <div class="content-container" v-show="contentShow">
+       <div class="content" v-show="visaContent" @click="visaContent=false">{{info.content}}</div>
        <textarea v-show="!visaContent" type="text" v-model="info.content" @blur="visaContent=true" />
-       <div>
+       <div class="button">
          <button @click="clickData">Delete!</button>
        </div>
     </div>
@@ -30,7 +30,6 @@ export default {
           this.$emit('handle-delete', this.info.id);
       },
       clickableDiv() {
-          console.log('Div is clicked');
           this.contentShow=!this.contentShow;
       }
   }
@@ -42,13 +41,19 @@ textarea {
   width: 90%;
   padding: 1em;
 }
- .content {
+.content:hover {
+  cursor: pointer;
+}
+ .content-container {
      border: 1px solid gray;
      background-color: #979797;
      color: black;
      padding: 1em;
+     text-align: left;
  }
-
+.button {
+  text-align: center;
+}
   button {
       width: 20%;
     padding: 0.5em;
@@ -60,7 +65,7 @@ textarea {
       border: solid 1px gray;
       padding: 1em;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      
 
   }
 
@@ -68,4 +73,25 @@ textarea {
       background-color:#737373;
       cursor: pointer;
   }
+  .row {
+    display: none;
+  }
+  /* Check if the screen size is at least 481px */ 
+        @media only screen and (min-width: 481px) { 
+            .contentInRow, .title, .date { 
+                display: block; 
+            } 
+            .kursinfo {
+               grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+   /* Check if the screen size is at least 320px and at most 480px */ 
+        @media only screen and (max-width: 480px){ 
+            .date, .title { 
+                display: block; 
+            } 
+            .kursinfo {
+               grid-template-columns: 1fr 1fr;
+            }
+        }  
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div class="info-container">
       <div class="header-info">
-          <div>Date</div><div>Title</div><div>Content</div>
+          <div class="head head-date">Date</div>
+          <div class="head head-title">Title</div>
+          <div class="head head-content">Content</div>
       </div>
       <kursinfoRad v-for="info in kursinfo" :key="info.id" :info="info" @handle-delete="deleteRow"/>
 
@@ -35,7 +37,6 @@ export default {
 <style>
 .header-info {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     background-color: #D33A3A;
     padding: 1em;
 }
@@ -44,9 +45,28 @@ export default {
       border: 1px solid gray;
       background-color: #C4C4C4;
       color: black;
-
+      text-align: center;
   }
-  /*.info-container >div:nth-child(even){
-      background-color: azure;
-  }*/
+  .head {
+      display: none;
+  }
+  /* Check if the screen size is at least 481px */ 
+        @media only screen and (min-width: 481px) { 
+            .head-content, .head-title, .head-date { 
+                display: block; 
+            } 
+            .header-info {
+               grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+   /* Check if the screen size is at least 320px and at most 480px */ 
+        @media only screen and (max-width: 480px){ 
+            .head-date, .head-title { 
+                display: block; 
+            } 
+            .header-info {
+               grid-template-columns: 1fr 1fr;
+            }
+        }  
+  
 </style>
