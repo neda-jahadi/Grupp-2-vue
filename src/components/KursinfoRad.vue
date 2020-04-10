@@ -6,7 +6,8 @@
       <div>{{info.content.substring(0,20)}}...</div>
    </div>
    <div class="content" v-show="contentShow">
-       <div>{{info.content}}</div>
+       <div v-show="visaContent" @click="visaContent=false">{{info.content}}</div>
+       <textarea v-show="!visaContent" type="text" v-model="info.content" @blur="visaContent=true" />
        <div>
          <button @click="clickData">Delete!</button>
        </div>
@@ -21,7 +22,8 @@ export default {
       info: Object(null),
   },
   data:()=>({
-    contentShow: false
+    contentShow: false,
+    visaContent: true
   }),
   methods: {
       clickData() {
@@ -35,7 +37,11 @@ export default {
 }
 </script>
 
-<style>
+<style> 
+textarea {
+  width: 90%;
+  padding: 1em;
+}
  .content {
      border: 1px solid gray;
      background-color: #979797;
