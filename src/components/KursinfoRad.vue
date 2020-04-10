@@ -59,6 +59,7 @@ textarea {
     padding: 0.5em;
     background-color: #D33A3A;
     margin-top: 1em;
+    border-radius: 5px;
 }
 
   .kursinfo {
@@ -92,6 +93,12 @@ textarea {
             } 
             .kursinfo {
                grid-template-columns: 1fr 1fr;
+            }
+            button {
+              width: 50%;
+              padding: 0.3em;
+              font-size: 1.1em;
+      
             }
         }  
 </style>
