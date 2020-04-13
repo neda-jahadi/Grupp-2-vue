@@ -1,12 +1,25 @@
 <template>
-  <div class="info-container">
+  <div>
+    <div class="filter-header">
+       <input type="text" placeholder="Skriv vad du vill söka efter..." @keyup="handleKeyUp" />
+    </div>
+    <div class="sort-header">
+       <h3>Hur vill du sortera listan?</h3>
+       
+         <button @click="sorteringsNyckel='title'">Title</button>
+         <button  class="contentInMobile" @click="sorteringsNyckel='content'">Content</button>
+         <button @click="sorteringsNyckel='date'">Date</button>
+       
+    </div>
+    <div class="info-container">
       <div class="header-info">
           <div class="head head-date">Date</div>
           <div class="head head-title">Title</div>
           <div class="head head-content">Content</div>
       </div>
-      <kursinfoRad v-for="info in kursinfo" :key="info.id" :info="info" @handle-delete="deleteRow"/>
+      <kursinfoRad v-for="info in sorteradeKursinfo" :key="info.id" :info="info" @handle-delete="deleteRow"/>
 
+    </div>
   </div>
 </template>
 
@@ -14,27 +27,90 @@
 import kursinfoRad from './KursinfoRad.vue'
 export default {
     data: ()=> ({
-        kursinfo: [{id:1,date:'date1',title:'title1',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:2,date:'date2',title:'title2',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:3,date:'date3',title:'titel3',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:4,date:'date4',title:'title4',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:5,date:'date5',title:'title5',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}
-                   ]
+        kursinfo: [{id:1,date:7,title:'Serverkommunikation med Observables',content:'BLorem Ipsum is simply dummy text of the printing and typesetting industry.'},
+                   {id:2,date:9,title:'title2',content:'ALorem Ipsum is simply dummy text of the printing and typesetting industry.'},
+                   {id:3,date:12,title:'titel3',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
+                   {id:4,date:14,title:'title4',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
+                   {id:5,date:1,title:'kommunication',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}
+                   ],
+        sorteringsNyckel: 'date',
+        filter: ''
     }),
     components: {
         kursinfoRad
     },
+    computed: {
+		sorteradeKursinfo() {
+			let copy = [ ...this.kursinfo ]; 
+			if( this.filter == '' ) {
+                console.log('Ingen filtering');
+			} else {
+				copy = this.filtreraKursinfo(copy);
+			}
+			if( this.sorteringsNyckel == 'title' ) {
+				let sorterad = copy.sort( (a, b) => {
+					if( a.title.toLowerCase() < b.title.toLowerCase() ) return -1;
+					else if( a.title.toLowerCase() > b.title.toLowerCase() ) return 1;
+					else return 0;
+				} )
+                console.log('title sortering is done');
+                return sorterad;
+            } 
+            else if(this.sorteringsNyckel == 'content') {
+				let sorterad = copy.sort( (a, b) => {
+					if( a.content.toLowerCase() < b.content.toLowerCase() ) return -1;
+					else if( a.content.toLowerCase() > b.content.toLowerCase() ) return 1;
+					else return 0;
+				} )
+               console.log('content sortering is done');
+               return sorterad;     
+            }else {
+				let sorterad = copy.sort( (a, b) => {
+					if( a[this.sorteringsNyckel] < b[this.sorteringsNyckel] ) return -1;
+					else if( a[this.sorteringsNyckel] > b[this.sorteringsNyckel] ) return 1;
+					else return 0;
+				} )
+				return sorterad;
+			}
+    
+        } // sorteradeKursinfo
+	},  // computed
     methods: {
         deleteRow(value) {
             this.kursinfo=this.kursinfo.filter(item=>item.id!==value);
 
-        }
+        },
+        filtreraKursinfo(lista) {
+            return lista.filter(info => info.title.toLowerCase().includes(this.filter.toLowerCase()));
+        },
+        handleKeyUp(event) {
+			this.filter = event.target.value;
+		}
     }
 
 }
 </script>
 
 <style>
+.sort-header {
+    display: flex;
+    margin: 0.5em;
+}
+.sort-header > * {
+    margin: 0.2em;
+}
+.filter-header input {
+    padding: 1em;
+    border-radius: 5px;
+    width: 50%;
+}
+.sort-header  button {
+    background-color:powderblue;
+    border: none;
+}
+.sort-header > button:hover {
+    background-color: gray;
+}
 .header-info {
     display: grid;
     background-color: #D33A3A;
@@ -52,6 +128,9 @@ export default {
   }
   /* Check if the screen size is at least 481px */ 
         @media only screen and (min-width: 481px) { 
+            .sort-header {
+                flex-direction: row;
+            }
             .head-content, .head-title, .head-date { 
                 display: block; 
             } 
@@ -61,6 +140,13 @@ export default {
         }
    /* Check if the screen size is at least 320px and at most 480px */ 
         @media only screen and (max-width: 480px){ 
+            .contentInMobile {
+                display: none;
+            }
+            .sort-header {
+                flex-direction: column;
+                margin-bottom: 2em;
+            }
             .head-date, .head-title { 
                 display: block; 
             } 
