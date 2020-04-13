@@ -27,11 +27,13 @@
 import kursinfoRad from './KursinfoRad.vue'
 export default {
     data: ()=> ({
-        kursinfo: [{id:1,date:7,title:'Serverkommunikation med Observables',content:'BLorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:2,date:9,title:'title2',content:'ALorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:3,date:12,title:'titel3',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:4,date:14,title:'title4',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-                   {id:5,date:1,title:'kommunication',content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}
+        kursinfo: [{id:1,date:7,title:'Serverkommunikation med Observables',content:'När en synkron funktion körs så är resten av JavaScript-appen synkroniserad med den. Ingen annan kod kan köras samtidigt.'},
+                   {id:2,date:9,title:'Routing',content:'Routing används för att visa olika URL i en SPA. Den har stöd för webbläsarens bakåt- och framåt-knappar.'},
+                   {id:3,date:12,title:'Formulär och validering',content:'Vi har sett hur man använder ngModel för att låta användaren ändra data i en komponent. (Dubbelriktad data binding)'},
+                   {id:4,date:14,title:'Asyncronous programming',content:'Asynkrona operationer (till exempel AJAX) tar tid innan de är klara. Vi vill att våra appar ska kunna göra annat medan de väntar på resultatet. '},
+                   {id:5,date:1,title:'Moduler',content:'En modul är en klass som är dekorerad med @NgModuleBootstrapping innebär att vi talar om hur appen ska startas.'},
+                   {id:6,date:11,title:'Listor',content:'Vi kan använda frågetecken-operatorn för att få olika värden, beroende på ett villkor. Det är ett mer komprimerat sätt att göra en if-sats. Den används mycket i JavaScript-ramverk.'},
+                   {id:7,date:23,title:'Introduktion till Vue',content:'Vue å andra sidan ger mycket mera frihet åt utvecklarna. Det är viktigt att ditt team har en kodstandard, så att man förstår varandras kod. Vue har inte behov av ett verktyg för att skapa filer'}
                    ],
         sorteringsNyckel: 'date',
         filter: ''
